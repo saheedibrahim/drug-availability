@@ -3,4 +3,5 @@
 @section('content')
 <p>welcome</p>
 <p>Register your drugs an quantity <a href="{{ route('drug.register') }}">here</a></p>
+<a href="{{ route('pharmacy.logout') }}">Logout</a>
 @endsection

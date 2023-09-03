@@ -5,11 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Doctor;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DoctorController extends Controller
 {
     public function signupPage() {
         return view('doctor.doctor_signup');
+    }
+
+    public function saveToDB($model, $DBdatas, $DBValues) {
+        foreach($DBdatas as $data){
+            $model::create([$data => $DBValues]);
+        }
     }
 
     public function signup(Request $request) {
@@ -40,6 +47,13 @@ class DoctorController extends Controller
         if($checkEmail) {
             return back()->with('error', 'Hospital name or Email already exist');
         }
+        
+        // $DBdatas = ['name','email', 'phone_number', 'hospital', 'address', 'password'];
+
+
+        // $this->saveToDB(Doctor::class, $DBdatas[0], $request->all());
+
+
 
         Doctor::create([
             'name' => $request->name,

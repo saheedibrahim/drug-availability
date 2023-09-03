@@ -48,9 +48,9 @@ class DrugAvailableController extends Controller
 
     public function update(Request $request) {
         $storeData = DrugAvailable::select('quantity', 'actual_price')->where('name', $request->name)->first();
-        $newPrice = $request->new_price ?? $storeData['actual_price'];
+        $newPrice = $request->new_price ?? $storeData->actual_price;
         DrugAvailable::where('name', $request->name)->update([
-            'quantity' => $storeData['quantity'] + $request->quantity,
+            'quantity' => $storeData->quantity + $request->quantity,
             'actual_price' => $newPrice,
             'doctor_gain' => $newPrice * 0.2,
             'selling_price' => $newPrice * 1.2,
@@ -63,7 +63,7 @@ class DrugAvailableController extends Controller
         return view('drug.drug_search');
     }
 
-    public function drugBuyPage(Request $request) {
+    public function drugToBuy(Request $request) {
         $quantityInStore = DrugAvailable::where('name', $request->name)->first();
         return view('drug.drug_buy', ['quantityInStore' => $quantityInStore]);
     }
@@ -71,7 +71,6 @@ class DrugAvailableController extends Controller
     public function drugBuy(Request $request) {
         $quantityInStore = DrugAvailable::where('name', $request->name)->value('quantity');
         if($quantityInStore < $request->quantity) {
-            dd($quantityInStore, $request->quantity);
             return back()->with('error', 'We do not have such quantity in store');
         }
         DrugAvailable::where('name', $request->name)->update([

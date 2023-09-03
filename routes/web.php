@@ -3,8 +3,6 @@
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\DrugAvailableController;
 use App\Http\Controllers\PharmacyController;
-use App\Models\Doctor;
-use App\Models\Pharmacy;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,6 +46,6 @@ Route::group(['prefix' => 'drug', 'as' => 'drug.'], function() {
     Route::get('update', [DrugAvailableController::class, 'updatePage'])->name('update');
     Route::put('update', [DrugAvailableController::class, 'update'])->name('update');
     Route::get('search', [DrugAvailableController::class, 'drugSearch'])->name('search');
-    Route::get('buy', [DrugAvailableController::class, 'drugBuyPage'])->name('buy');
+    Route::get('buy', [DrugAvailableController::class, 'drugToBuy'])->name('buy');
     Route::put('buy', [DrugAvailableController::class, 'drugBuy'])->name('buy');
 });
